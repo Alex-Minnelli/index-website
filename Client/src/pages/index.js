@@ -10,5 +10,6 @@ import { TwoTCC } from "./7-2tcc.pages.jsx";
 import { TwoTCAlts } from "./2tc-alts.jsx";
 import { TwoMPCAlts } from "./2mpc-alts.jsx";
 import { TwoTCStats } from './2tc-stats.jsx'
+import { TwoMPCStats } from './2mpc-stats.jsx'
 
-export { HomePage, Helper, TwoTC, FTTC, LCC, LTC, TwoMPC, LCD, TwoTCC, TwoTCAlts, TwoMPCAlts, TwoTCStats }
+export { HomePage, Helper, TwoTC, FTTC, LCC, LTC, TwoMPC, LCD, TwoTCC, TwoTCAlts, TwoMPCAlts, TwoTCStats, TwoMPCStats }

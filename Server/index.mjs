@@ -51,7 +51,9 @@ app.post('/add/2tc/alt', async (req, res) => {
 }) */
 
 
-
+//Get 2tc Combos
+//
+//
 app.get('/2tc/og', async (req, res, next) => {
     try{res.status(200).send(await query('SELECT * FROM 2tc_og'))
     }catch(err) {next(err);}
@@ -68,6 +70,10 @@ app.get('/2tc/alt', async (req, res, next) => {
 })
 
 
+
+//Get 2MPC Combos
+//
+//
 app.get('/2mpc/og', async (req, res, next) => {
     try{res.status(200).send(await query('SELECT * FROM 2mpc_og'))
     }catch(err) {next(err);}
@@ -84,6 +90,9 @@ app.get('/2mpc/og/abbrev', async (req, res, next) => {
 })
 
 
+//Get FTTC Combos
+//
+//
 app.get('/fttc/og', async (req, res, next) => {
     try{res.status(200).send(await query('SELECT * FROM fttc_og'))
     }catch(err) {next(err);}
@@ -95,18 +104,22 @@ app.get('/fttc/alt', async (req, res, next) => {
 })
 
 
+//Get LCC Combos
 app.get('/lcc', async (req, res, next) => {
     try{res.status(200).send(await query('SELECT * FROM lcc'))
     }catch(err) {next(err);}
 })
 
-
+//Get LCD Combos
 app.get('/lcd', async (req, res, next) => {
     try{res.status(200).send(await query('SELECT * FROM lcd'))
     }catch(err) {next(err);}
 })
 
 
+//Get 2TCC Combos
+//
+//
 app.get('/2tcc/og', async (req, res, next) => {
     try{res.status(200).send(await query('SELECT * FROM 2tcc_og'))
     }catch(err) {next(err);}
@@ -117,12 +130,16 @@ app.get('/2tcc/alt', async (req, res, next) => {
     }catch(err) {next(err);}
 })
 
-
+//Get Maps
 app.get('/maps', async (req, res, next) => {
     try{res.status(200).send(await query('SELECT * FROM maps'))
     }catch(err) {next(err);}
 })
 
+
+//Get Average Difficulty Cost for LCC and LCD
+//
+//
 app.get('/average/lcc', async(req, res, next) => {
     try{res.status(200).send(await query('SELECT difficulty, floor(AVG(lcc.cost)) as `Average Cost` from lcc join maps on lcc.map = maps.map GROUP BY difficulty'))
     }catch(err) {next(err);}
@@ -134,6 +151,9 @@ app.get('/average/lcd', async(req, res, next) => {
 })
 
 
+
+
+//Get 2tc Stats
 app.get('/2tc/stats/Appearences/og', async(req, res, next) => {
     try{res.status(200).send(await query('SELECT person as Person,count(*) as `Total Count` FROM 2tc_OG GROUP BY person ORDER BY `Total Count` DESC'))
     }catch(err) {next(err);}
@@ -161,6 +181,25 @@ app.get('/2tc/stats/towers/og', async(req,res, next) => {
 
 app.get('/2tc/stats/towers/total', async(req,res, next) => {
     try{res.status(200).send(await query('SELECT Tower,count(*) as `Total Count` FROM (SELECT `Tower 1` as Tower FROM 2tc_og UNION ALL SELECT `Tower 2` as Tower FROM 2tc_og UNION ALL SELECT `Tower 1` FROM 2tc_alt as a JOIN 2tc_og as o on a.NUmber = o.Number UNION ALL SELECT `Tower 2` FROM 2tc_alt as a JOIN 2tc_og as o on a.NUmber = o.Number) as x GROUP BY Tower ORDER BY `Total Count` DESC'))
+    }catch(err) {next(err);}
+})
+
+
+
+
+//Get 2MPC Stats
+app.get('/2mpc/stats/Appearences/og', async(req, res, next) => {
+    try{res.status(200).send(await query('SELECT person as Person,count(*) as `Total Count` FROM 2mpc_OG GROUP BY person ORDER BY `Total Count` DESC'))
+    }catch(err) {next(err);}
+})
+
+app.get('/2mpc/stats/Appearences/total', async(req, res, next) => {
+    try{res.status(200).send(await query(`SELECT person as Person, count(*) as \`Total Count\` FROM (SELECT o.person FROM 2mpc_og as o UNION ALL SELECT a.person FROM 2mpc_alt as a) as c GROUP BY Person ORDER BY \`Total Count\` DESC`))
+    }catch(err) {next(err);}
+})
+
+app.get('/2mpc/stats/versions', async(req,res, next) => {
+    try{res.status(200).send(await query('SELECT floor(Version) as Version,count(*) as `Total Count` FROM 2mpc_OG GROUP BY floor(Version)'))
     }catch(err) {next(err);}
 })
 

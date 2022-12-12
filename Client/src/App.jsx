@@ -1,5 +1,5 @@
 import { BrowserRouter, NavLink, Routes, Route } from "react-router-dom";
-import { HomePage, Helper, TwoTC, FTTC, LCC, LTC, TwoMPC, LCD, TwoTCC, TwoTCAlts, TwoMPCAlts, TwoTCStats } from "./pages/index.js";
+import { HomePage, Helper, TwoTC, FTTC, LCC, LTC, TwoMPC, LCD, TwoTCC, TwoTCAlts, TwoMPCAlts, TwoTCStats,TwoMPCStats } from "./pages/index.js";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
@@ -24,6 +24,7 @@ export default function App() {
             <Nav.Link href='/2MPC'>2MPC</Nav.Link>
             <NavDropdown title="" id="basic-nav-dropdown">
               <NavDropdown.Item href='/2MPC/Alts'>Alts</NavDropdown.Item>
+              <NavDropdown.Item href='/2MPC/Stats'>Stats</NavDropdown.Item>
             </NavDropdown>
             <Nav.Link href='/LCD'>LCD</Nav.Link>
             <Nav.Link href='/2TCC'>2TCC</Nav.Link>
@@ -43,7 +44,8 @@ export default function App() {
         <Route path="/2TCC" element={<TwoTCC />}>2TCC</Route>
         <Route path="/2TC/Alts" element={<TwoTCAlts />}>2TC/Alts</Route>
         <Route path="/2MPC/Alts" element={<TwoMPCAlts />}>2MPC/Alts</Route>
-        <Route path="/2TC/Stats" element={<TwoTCStats />}>2MPC/Alts</Route>
+        <Route path="/2TC/Stats" element={<TwoTCStats />}>2TC/Stats</Route>
+        <Route path="/2MPC/Stats" element={<TwoMPCStats />}>2MPC/Stats</Route>
       </Routes>
     </BrowserRouter>
   );
