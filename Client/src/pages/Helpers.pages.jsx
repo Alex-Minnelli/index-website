@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import Axios from 'axios';
 
 function CRUD(action, type, challenge, mapList){
+  let og; if(type === 'OG') {og = true} else if(type === 'ALT'){og = false};
   const [number, setNumber] = useState();
   const [tower1, setTower1] = useState();
   const [tower2, setTower2] = useState();
@@ -16,7 +17,6 @@ function CRUD(action, type, challenge, mapList){
   const [person, setPerson] = useState();
   const [link, setLink] = useState();
   const [current, setCurrent] = useState(false);
-  let og; if(type === 'OG') {og = true} else if(type === 'ALT'){og = false};
   
   if(action === '' || type === '' || challenge === ''){
     return<img src='https://preview.redd.it/3n2zbtb71x141.png?width=960&crop=smart&auto=webp&s=fbd98bbc057b3b222dcc4438fc47b3f6ef39ba86' alt='PatFunky' width='400px'></img>
@@ -36,7 +36,6 @@ function CRUD(action, type, challenge, mapList){
                         <Form.Control type="text" placeholder="Date" onChange={e => setDate(e.target.value)}/>
                         <Form.Control type="text" placeholder="Person" onChange={e => setPerson(e.target.value)}/>
                         <Form.Control type="text" placeholder="Link" onChange={e => setLink(e.target.value)}/>
-                        <Form.Check inline checked={current} label="Current" type='switch' id='Current' onChange={e => setCurrent(!current)}/>
                     </Form.Group>
                     <Button variant="primary" type="submit" onClick={addOG2tc}>Add Combo</Button>
                 </Form>
@@ -58,7 +57,17 @@ function CRUD(action, type, challenge, mapList){
           </div>
     )}
   } else if (action === 'Delete'){
-    if(challenge === '2TC' && (type)){
+    if(type === 'OG' && challenge === '2TC'){
+      return(
+          <div>
+              <Form>
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                      <Form.Control type="text" placeholder="Number" onChange={e => setNumber(e.target.value)}/>
+                  </Form.Group>
+                  <Button variant="primary" type="submit" onClick={deleteOG2tc}>Delete Combo</Button>
+              </Form>
+          </div>
+    )} else if (type === 'ALT' && challenge === '2TC'){
       return(
           <div>
               <Form>
@@ -67,7 +76,7 @@ function CRUD(action, type, challenge, mapList){
                       <Form.Label>Map</Form.Label>
                       <Form.Select onChange={e => setMap(e.target.value)}>{mapList.map(ele => {return(<option value={ele.Abbrev}>{ele.Map}</option>)})}</Form.Select>
                   </Form.Group>
-                  <Button variant="primary" type="submit" onClick={delete2tc}>Delete Combo</Button>
+                  <Button variant="primary" type="submit" onClick={deleteALT2tc}>Delete Combo</Button>
               </Form>
           </div>
     )}
@@ -112,9 +121,7 @@ function CRUD(action, type, challenge, mapList){
       version: +version,
       date: date,
       person: person,
-      link: link,
-      current: current ? 1 : 0,
-      og: og ? 1 : 0
+      link: link
     })
   }
 
@@ -128,8 +135,12 @@ function CRUD(action, type, challenge, mapList){
     })
   }
 
-  function delete2tc(){
-    Axios.delete(`http://localhost:5000/delete/2tc/${number}/${map}`)
+  function deleteOG2tc(){
+    Axios.delete(`http://localhost:5000/delete/2tc/og/${number}`)
+  }
+
+  function deleteALT2tc(){
+    Axios.delete(`http://localhost:5000/delete/2tc/alt/${number}/${map}`)
   }
 }
 

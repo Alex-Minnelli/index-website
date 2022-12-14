@@ -1,7 +1,8 @@
 import "../App.css";
 import Axios from "axios";
+import { Helmet } from "react-helmet";
 import { ComboTable } from "../helpers/tables";
-import { /* changeMap,*/  filterAlts,  /*waterLess */ } from "../helpers/maps.js";
+import { filterAlts,  /*waterLess */ } from "../helpers/maps.js";
 import { useEffect, useState, useMemo } from "react";
   let columns = [
     {
@@ -16,7 +17,7 @@ import { useEffect, useState, useMemo } from "react";
     mapList.forEach(map => {
       columns.push({
         name: map.Abbrev,
-        selector: row => filterAlts(OG.concat(ALT), row.Number).map(ele => ele.Map === map.Abbrev ? 'x' : ''),
+        selector: row => filterAlts(OG.concat(ALT), row.Number).map(ele => ele.Map === map.Abbrev ? '✔️' : ''),
         width: '55px',
         conditionalCellStyles: [
           {
@@ -64,12 +65,17 @@ export function TwoMPCAlts() {
   useMemo(() => Alts(OG, ALT, mapList), [OG, ALT, mapList]);
 
   return (
-    <ComboTable
-      title={<b>Two Mega Pops CHIMPS Alt Maps Tracker</b>}
-      columns={columns}
-      data={OG}
-      dense
-      customStyles={customStyles}
-    />
+    <div>
+      <Helmet>
+      <title>BTD6 Index | Two Mega Pops CHIMPS | Alts</title>
+      </Helmet>
+      <ComboTable
+        title={<b>Two Mega Pops CHIMPS Alt Maps Tracker</b>}
+        columns={columns}
+        data={OG}
+        dense
+        customStyles={customStyles}
+      />
+    </div>
   );
 }

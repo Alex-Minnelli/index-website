@@ -63,21 +63,21 @@ export function TwoMPCStats() {
     const [totalAppearences, setTotalAppearences] = useState();
     const [versionCount, setVersionCount] = useState();
     const [mapCount, setMapCount] = useState();
-    const [towerCountOG, setTowerCountOG] = useState();
+    //const [towerCountOG, setTowerCountOG] = useState();
     const [towerCountTotal, setTowerCountTotal] = useState();
     useEffect(() => {Axios.get("http://localhost:5000/2mpc/stats/Appearences/og").then((res) => {setOgAppearences(res.data);})}, []);
     useEffect(() => {Axios.get("http://localhost:5000/2mpc/stats/Appearences/total").then((res) => {setTotalAppearences(res.data);})}, []);
     useEffect(() => {Axios.get("http://localhost:5000/2mpc/stats/versions").then((res) => {setVersionCount(res.data);})}, []);
-    /*useEffect(() => {Axios.get("http://localhost:5000/2tc/stats/maps").then((res) => {setMapCount(res.data);})}, []);
-    useEffect(() => {Axios.get("http://localhost:5000/2tc/stats/towers/og").then((res) => {setTowerCountOG(res.data);})}, []);
-    useEffect(() => {Axios.get("http://localhost:5000/2tc/stats/towers/Total").then((res) => {setTowerCountTotal(res.data);})}, []);*/
+    useEffect(() => {Axios.get("http://localhost:5000/2mpc/stats/maps").then((res) => {setMapCount(res.data);})}, []);
+    /*useEffect(() => {Axios.get("http://localhost:5000/2tc/stats/towers/og").then((res) => {setTowerCountOG(res.data);})}, []);*/
+    useEffect(() => {Axios.get("http://localhost:5000/2mpc/stats/towers/Total").then((res) => {setTowerCountTotal(res.data);})}, []);
 
     return (
         <div className="2mpc-stats-parent">
             <Helmet>
-                <title>BTD6 Index | Two Towers CHIMPS | Stats</title>
+                <title>BTD6 Index | Two Mega Pops CHIMPS | Stats</title>
             </Helmet>
-            <h1>Two Towers CHIMPS Stats</h1>
+            <h1>Two Mega Pops CHIMPS Stats</h1>
 
             <div>
                 <div style={{width: '45%', float: "left", paddingLeft: '5%'}}>
@@ -109,28 +109,28 @@ export function TwoMPCStats() {
                 </div>
                 <div style={{width: '45%', float: "left", paddingLeft: '5%'}}>
                     <ComboTable
-                        title={<b>Map Counts</b>}
-                        columns={mapColumns}
-                        data={mapCount}
+                        title={<b>Tower Completions</b>}
+                        columns={towerColumns}
+                        data={towerCountTotal}
                         dense
                         />
                 </div>
             </div>
 
             <div>
-                <div style={{width: '45%', float: "left", paddingLeft: '5%'}}>
+{/*                 <div style={{width: '45%', float: "left", paddingLeft: '5%'}}>
                     <ComboTable
                         title={<b>Tower Counts OG</b>}
                         columns={towerColumns}
                         data={towerCountOG}
                         dense
                         />
-                </div>
+                </div> */}
                 <div style={{width: '45%', float: "left", paddingLeft: '5%'}}>
                     <ComboTable
-                        title={<b>Tower Counts Total</b>}
-                        columns={towerColumns}
-                        data={towerCountTotal}
+                        title={<b>Map Counts</b>}
+                        columns={mapColumns}
+                        data={mapCount}
                         dense
                         />
                 </div>

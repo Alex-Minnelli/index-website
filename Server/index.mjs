@@ -33,22 +33,19 @@ const query = (qryStr, values) => {
     });
 };
 
-/* app.post('/add/2tc/og', async (req, res) => {
-    res.status(200).send(await query("INSERT INTO 2tc VALUES(?,?,?,?,?,?,?,?,?,?,?)",
-        [req.body.number, req.body.tower1, 
-        req.body.tower2, req.body.upgrades, 
-        req.body.map, req.body.version, 
-        req.body.date, req.body.person, 
-        req.body.link, req.body.current, 
-        req.body.og])
+app.post('/add/2tc/og', async (req, res) => {
+    res.status(200).send(await query("INSERT INTO 2tc_og VALUES(?,?,?,?,?,?,?,?,?)",
+        [req.body.number, req.body.tower1, req.body.tower2, req.body.upgrades, 
+        req.body.map, req.body.version, req.body.date, 
+        req.body.person, req.body.link])
     )
 })
 
 app.post('/add/2tc/alt', async (req, res) => {
-    res.status(200).send(await query("INSERT INTO 2tc VALUES(?,?,?,?,?,?,?,?,?,?,?)",
-        [req.body.number, req.body.map, req.body.person, req.body.link, req.body.og])
+    res.status(200).send(await query("INSERT INTO 2tc_alt VALUES(?,?,?,?)",
+        [req.body.number, req.body.map, req.body.person, req.body.link])
     )
-}) */
+})
 
 
 //Get 2tc Combos
@@ -130,6 +127,7 @@ app.get('/2tcc/alt', async (req, res, next) => {
     }catch(err) {next(err);}
 })
 
+
 //Get Maps
 app.get('/maps', async (req, res, next) => {
     try{res.status(200).send(await query('SELECT * FROM maps'))
@@ -203,12 +201,29 @@ app.get('/2mpc/stats/versions', async(req,res, next) => {
     }catch(err) {next(err);}
 })
 
-
-
-/* app.delete('/delete/2tc/:number/:map', async (req, res, next) => {
-    try{res.status(200).send(await query('DELETE FROM 2tc WHERE Number = ? AND Map = ?', [req.params.number, req.params.map]))
+app.get('/2mpc/stats/maps', async(req,res, next) => {
+    try{res.status(200).send(await query('SELECT Map,count(*) as `Total Count` FROM(SELECT o.map FROM 2mpc_og as o UNION ALL SELECT m.Map FROM 2mpc_alt as t join maps as m on t.Map = m.Abbrev) as c GROUP BY Map ORDER BY `Total Count` DESC'))
     }catch(err) {next(err);}
-}) */
+})
+
+app.get('/2mpc/stats/towers/total', async(req,res, next) => {
+    try{res.status(200).send(await query('SELECT Tower,count(*) as `Total Count` FROM (SELECT Tower FROM 2mpc_og UNION ALL SELECT Tower FROM 2mpc_alt as a JOIN 2mpc_og as o on a.number = o.number) as x GROUP BY Tower ORDER BY `Total Count` DESC'))
+    }catch(err) {next(err);}
+})
+
+
+
+app.delete('/delete/2tc/og/:number', async (req, res, next) => {
+    try{res.status(200).send(await query('DELETE FROM 2tc_og WHERE Number = ?', [req.params.number]))
+    }catch(err) {next(err);}
+})
+
+app.delete('/delete/2tc/alt/:number/:map', async (req, res, next) => {
+    try{res.status(200).send(await query('DELETE FROM 2tc_alt WHERE Number = ? and Map = ?', [req.params.number, req.params.map]))
+    }catch(err) {next(err);}
+})
+
+
 
 //Error Handling Middleware
 app.use(handleError)
