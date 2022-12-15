@@ -2,7 +2,7 @@ import "../App.css";
 import { Helmet } from "react-helmet";
 import Form from "react-bootstrap/Form";
 import Button from 'react-bootstrap/Button';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Axios from 'axios';
 
 function CRUD(action, type, challenge, mapList){
@@ -17,7 +17,11 @@ function CRUD(action, type, challenge, mapList){
   const [person, setPerson] = useState();
   const [link, setLink] = useState();
   const [current, setCurrent] = useState(false);
-  
+  const [editNumber, setEditNumber] = useState();
+  const [editCombo, setEditCombo] = useState([{"Number":0,"Tower 1":"Your","Tower 2":"Mom","Upgrades":"6-9-0 | 4-2-0","Map":"Your Moms House","Version":"69.420","Date":"69/420/1337","Person":"Me","Link":"https://com.org.xyz"}]);
+  useMemo(() => {Axios.get(`http://localhost:5000/2tc/og/${editNumber}`).then(res => setEditCombo(res.data))}, [editNumber]);
+  console.log(editCombo[0])
+
   if(action === '' || type === '' || challenge === ''){
     return<img src='https://preview.redd.it/3n2zbtb71x141.png?width=960&crop=smart&auto=webp&s=fbd98bbc057b3b222dcc4438fc47b3f6ef39ba86' alt='PatFunky' width='400px'></img>
   }else if(action === 'Add'){
@@ -87,12 +91,10 @@ function CRUD(action, type, challenge, mapList){
               <Form>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label>Combo to Edit</Form.Label>
-                      <Form.Control type="text" placeholder="Number" onChange={e => setNumber(e.target.value)}/>
-                      <Form.Label>Map</Form.Label>
-                      <Form.Select onChange={e => setMap(e.target.value)}>{mapList.map(ele => {return(<option value={ele.Abbrev}>{ele.Map}</option>)})}</Form.Select>
+                      <Form.Control type="text" placeholder="Number" onChange={e => setEditNumber(e.target.value)}/>
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <Form.Control type="text" placeholder="Number" onChange={e => setNumber(e.target.value)}/>
+                      <Form.Control type="text" placeholder='Number' defaultValue={`${editCombo}` || 'a'} onChange={e => setNumber(e.target.value)}/>
                       <Form.Control type="text" placeholder="Tower 1" onChange={e => setTower1(e.target.value)}/>
                       <Form.Control type="text" placeholder="Tower 2" onChange={e => setTower2(e.target.value)}/>
                       <Form.Control type="text" placeholder="Upgrades" onChange={e => setUpgrades(e.target.value)}/>
@@ -101,7 +103,6 @@ function CRUD(action, type, challenge, mapList){
                       <Form.Control type="text" placeholder="Date" onChange={e => setDate(e.target.value)}/>
                       <Form.Control type="text" placeholder="Person" onChange={e => setPerson(e.target.value)}/>
                       <Form.Control type="text" placeholder="Link" onChange={e => setLink(e.target.value)}/>
-                      <Form.Check inline checked={current} label="Current" type='switch' id='Current' onChange={e => setCurrent(!current)}/>
                   </Form.Group>
                   <Button variant="primary" type="submit" onClick={'a'}>Edit Combo</Button>
               </Form>

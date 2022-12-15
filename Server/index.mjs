@@ -66,6 +66,11 @@ app.get('/2tc/alt', async (req, res, next) => {
     }catch(err) {next(err);}
 })
 
+app.get('/2tc/og/:number', async (req, res, next) => {
+    try{res.status(200).send(await query('SELECT * FROM 2tc_og WHERE Number = ?', [req.params.number]))
+    }catch(err) {next(err);}
+})
+
 
 
 //Get 2MPC Combos
