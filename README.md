@@ -41,8 +41,11 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 
 ## The Project
 
-https://i.imgur.com/urM2WA1.png Each page takes data from a database and shows it in a react0data-table-component table
+![Data Table](https://i.imgur.com/urM2WA1.png "Data Table")
+Each page takes data from a database and shows it in a react0data-table-component table
 
-https://i.imgur.com/t5osnHu.png Some Tabs, have sub categories for stats
+![Statistics](https://i.imgur.com/t5osnHu.png "Statistics")
+Some Tabs, have sub categories for stats
 
-https://i.imgur.com/ykgdcTd.png And a section for people to add, delete, and edit data in the database
+![CRUD Functionality](https://i.imgur.com/ykgdcTd.png "CRUD Functionality")
+And a section for people to add, delete, and edit data in the database
