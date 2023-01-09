@@ -217,7 +217,14 @@ app.get('/2mpc/stats/towers/total', async(req,res, next) => {
 })
 
 
+//Update 2tc
+app.put('/update/2tc/og/:number', async(req, res, next) => {
+    try{res.status(200).send(await query('UPDATE 2tc_og SET Number = ?, `Tower 1` = ?, `Tower 2` = ?, Upgrades = ?, Map = ?, Version = ?, Date = ?, Person = ?, Link = ? WHERE Number = ?', [req.body.number, req.body.tower1, req.body.tower2, req.body.upgrades, req.body.map, req.body.version, req.body.date, req.body.person, req.body.link, req.params.number]))
+    }catch(err){next(err)}
+})
 
+
+//Delete 2tc
 app.delete('/delete/2tc/og/:number', async (req, res, next) => {
     try{res.status(200).send(await query('DELETE FROM 2tc_og WHERE Number = ?', [req.params.number]))
     }catch(err) {next(err);}
